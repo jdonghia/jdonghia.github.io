@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+html {
+  scrollbar-gutter: stable;
+}
+
+html body[data-scroll-locked] {
+  --removed-body-scroll-bar-size: 0 !important;
+  margin-right: 0 !important;
+}
+
+@theme inline {
+  --font-roboto: var(--font-roboto);
+  --font-inter-tight: var(--font-inter-tight);
+  --font-jet-brains-mono: var(--font-jetbrains-mono);
+}
+
+@theme {
+  --color-light-sea-green: #40bebd;
+  --color-cadet-gray: #abacaf;
+  --color-jet: #2c2c2c;
+  --color-eerie-black: #1b1b1b;
+  --color-seasalt: #fafafa;
+  --color-eggshell: #f0eada;
+  --color-gray: #777777;
+  --color-auburn: #ae2429;
+  --color-ecru: #ada159;
+  --color-amaranth: #db324d;
+}
+
+/* Sugar-high token colors mapped to project palette */
+:root {
+  --sh-identifier: var(--color-seasalt);
+  --sh-keyword: var(--color-light-sea-green);
+  --sh-string: var(--color-ecru);
+  --sh-class: var(--color-light-sea-green);
+  --sh-property: var(--color-cadet-gray);
+  --sh-entity: var(--color-seasalt);
+  --sh-jsxliterals: var(--color-light-sea-green);
+  --sh-sign: var(--color-gray);
+  --sh-comment: var(--color-gray);
+}
+
+code {
+  font-size: 14px;
+}
+
+.code-header {
+  background-color: #333;
+  padding: 0.5rem 1rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  color: white;
+  font-family: var(--font-jet-brains-mono), monospace;
+  font-size: 14px;
+}
