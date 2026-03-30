@@ -1,12 +1,11 @@
 ---
 order: 1
-title: "Static Scoping"
+title: "Scopes"
 subtitle: ""
 tags:
   - "Javascript"
   - "Studies"
 date: "Mar 2026"
-image: "/imgs/linux.jpeg"
 ---
 
 ## Introdução
