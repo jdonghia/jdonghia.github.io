@@ -19,13 +19,13 @@ export function Projects(): React.JSX.Element {
       <ul className="space-y-8">
         {projects.map((project) => (
           <li key={project.slug} className="flex gap-5 rounded">
-            <Image
-              src={project.image}
-              width={50}
-              height={50}
-              className="border border-gray rounded w-36 h-20"
-              alt={`${project.title} cover image`}
-            />
+            {/* <Image */}
+            {/*   src="" */}
+            {/*   aria-hidden="true" */}
+            {/*   className="border border-gray rounded w-36 h-20" */}
+            {/*   height={50} */}
+            {/*   width={50} */}
+            {/* /> */}
             <div>
               <ArrowLink className="text-[1rem]" href={project.url} id={project.slug} target="_blank" rel="noopener noreferrer">
                 {project.title}
