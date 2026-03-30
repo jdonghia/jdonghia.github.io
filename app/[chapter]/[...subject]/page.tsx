@@ -6,6 +6,8 @@ import remarkGfm from "remark-gfm";
 
 const { h1: H1, h3: H3 } = components;
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const writings = await getWritings();
 
