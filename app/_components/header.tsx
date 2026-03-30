@@ -35,7 +35,7 @@ export function Header() {
       <div className="relative mx-auto w-full max-w-5xl">
         <div className="flex items-center justify-between">
           <Link href="/">
-            <span className="text-light-sea-green block cursor-pointer text-md font-bold">donghia.dev</span>
+            <span className="text-light-sea-green block cursor-pointer text-md font-bold">jdonghia</span>
           </Link>
           <div className="flex items-end justify-center gap-5">
             <Link

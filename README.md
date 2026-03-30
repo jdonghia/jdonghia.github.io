@@ -1,4 +1,4 @@
-# donghia.dev
+# jdonghia.github.io
 
 Latest version of my personal-website, built with Next.js App Router, TypeScript, and Tailwind CSS.
 
