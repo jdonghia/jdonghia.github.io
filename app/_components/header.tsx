@@ -39,7 +39,7 @@ export function Header() {
           </Link>
           <div className="flex items-end justify-center gap-5">
             <Link
-              href="https://github.com/jdonghia/folio"
+              href="https://github.com/jdonghia/jdonghia.github.io"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="View source code on GitHub"
