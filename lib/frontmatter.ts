@@ -81,7 +81,17 @@ function readFrontmatterFilesSyncFromDirectory(
   recursive: boolean,
   ignorePrefix: string,
 ): FrontmatterFile[] {
-  const entries = fs.readdirSync(directory, { withFileTypes: true });
+  let entries: fs.Dirent[];
+
+  try {
+    entries = fs.readdirSync(directory, { withFileTypes: true });
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      return [];
+    }
+
+    throw error;
+  }
 
   const files = entries.flatMap((entry): FrontmatterFile[] => {
     const fullPath = path.join(directory, entry.name);
@@ -115,7 +125,17 @@ async function readFrontmatterFilesFromDirectory(
   recursive: boolean,
   ignorePrefix: string,
 ): Promise<FrontmatterFile[]> {
-  const entries = await fsPromises.readdir(directory, { withFileTypes: true });
+  let entries: fs.Dirent[];
+
+  try {
+    entries = await fsPromises.readdir(directory, { withFileTypes: true });
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
+      return [];
+    }
+
+    throw error;
+  }
 
   const files = await Promise.all(
     entries.map(async (entry): Promise<FrontmatterFile[]> => {
