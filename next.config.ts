@@ -6,6 +6,7 @@ import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 
 const nextConfig: NextConfig = {
   transpilePackages: ["next-mdx-remote"],
+  basePath: process.env.PAGES_BASE_PATH,
   output: "export",
   trailingSlash: true,
   images: {
