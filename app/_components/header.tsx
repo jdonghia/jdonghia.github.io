@@ -38,16 +38,16 @@ export function Header() {
             <span className="text-light-sea-green block cursor-pointer text-md font-bold">jdonghia</span>
           </Link>
           <div className="flex items-end justify-center gap-5">
-            <Link
-              href="https://github.com/jdonghia/jdonghia.github.io"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="View source code on GitHub"
-              className="text-light-sea-green hover:text-jet dark:hover:text-seasalt inline-flex items-center self-end gap-1 transition-colors"
-            >
-              <GitHubLogoIcon className="size-4" />
-              <p>Source</p>
-            </Link>
+            {/* <Link */}
+            {/*   href="https://github.com/jdonghia/jdonghia.github.io" */}
+            {/*   target="_blank" */}
+            {/*   rel="noopener noreferrer" */}
+            {/*   aria-label="View source code on GitHub" */}
+            {/*   className="text-light-sea-green hover:text-jet dark:hover:text-seasalt inline-flex items-center self-end gap-1 transition-colors" */}
+            {/* > */}
+            {/*   <GitHubLogoIcon className="size-4" /> */}
+            {/*   <p className="me-5">source</p> */}
+            {/* </Link> */}
             {mounted && isDark !== null ? (
               <DarkMode onToggle={handleTheme} className="text-light-sea-green text-3xl" toggled={isDark} />
             ) : (
