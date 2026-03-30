@@ -1,6 +1,6 @@
 ---
 order: 1
-title: "Scopes"
+title: "Scopes (PT-BR)"
 subtitle: ""
 tags:
   - "Javascript"
