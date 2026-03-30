@@ -1,6 +1,6 @@
 # donghia.dev
 
-Latest version of my website, built with Next.js App Router, TypeScript, and Tailwind CSS.
+Latest version of my personal-website, built with Next.js App Router, TypeScript, and Tailwind CSS.
 
 ![Page](public/imgs/root-page.png)
 
@@ -8,7 +8,7 @@ Latest version of my website, built with Next.js App Router, TypeScript, and Tai
 
 - Next.js 15 (App Router)
 - React 19
-- TypeScript (strict mode)
+- TypeScript 
 - Tailwind CSS 4
 - MDX (`@next/mdx` + remark plugins)
 
@@ -34,8 +34,6 @@ Then open `http://localhost:3000`.
 - `pnpm lint` — run Next.js linting
 - `pnpm build` — create a production build (configured for static export)
 - `pnpm start` — run the production server
-
-> Note: there is currently no test runner configured in this project.
 
 ## Project Structure
 
