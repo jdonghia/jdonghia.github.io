@@ -53,7 +53,7 @@ export function Dashboard(): React.JSX.Element {
       title: getString(data, "title"),
       tags: getStringArray(data, "tags"),
       date: getString(data, "date"),
-      description: truncateText(paragraph, 80),
+      description: truncateText(paragraph, 75),
       href: `/${chapter}/${slug}`,
       image: getOptionalString(data, "image"),
     };
@@ -68,7 +68,7 @@ export function Dashboard(): React.JSX.Element {
 
   return (
     <section className="space-y-7">
-      <SectionLabel>Recent Writing</SectionLabel>
+      <SectionLabel>Recent Content</SectionLabel>
 
       <div className="max-w-2xl sm:grid sm:grid-cols-12 sm:grid-rows-1 sm:auto-rows-fr sm:gap-4">
         {cards.map((entry) => (
