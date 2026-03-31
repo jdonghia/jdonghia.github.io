@@ -1,10 +1,66 @@
+---
+order: 1
+title: "Asynchronicity"
+subtitle: ""
+tags:
+  - "Javascript"
+  - "Studies"
+date: "Mar 2026"
+---
+
+## Introduction
+
+- Introduction
+- Disclaimer
+- Story of Asynchronicity
+  - Single-threaded Javascript
+  - Asynchronicity x Multi-Threading
+    - Service Workers
+    - Do not share the same Execution Context
+  - Parallelism x Concurrency
+    - Concurrency = Managing order of callbacks
+      - Strictly related to Asynchronicity
+    - Parallelism - Happens at the same time and returns without a order?
+
+- Callbacks
+  - Synchronous AJAX (would freeze the entire page)
+  - Asynchronous AJAX
+  - Callback Hell
+  - Non-reasoning non-sequential
+  - Inversion of Control
+    - Third-party notification
+    - Non-trustability
+
+- Thunks
+  - Token that holds a value
+  - Synchronous Thunks
+  - Lazy x Eager Thunk
+  - Closures under the hood (pure Javascript)
+  - Asynchronous Thunks
+    - Remove time as a complex factor
+
+- Promises
+  - Inverts the Inversion of Control
+  - Strict rules for trustabiltiy
+  - Fancy API with Thunks
+  - Promise chaining
+  - Asyncquence (ASQ)
+
+- Generators
+  - Closures under the hood
+  - State Machines
+  - Async Generators
+    - Async/await
+  - Cancellable Promises
+
 # Asynchronocity on Javascript
 
-Asynchronicity is one of the most powerful pattern on Javascript. 
+Asynchronicity is one of the most powerful pattern on Javascript.
 
 ## Synchronous Execution
 
-Javascript is a Single-Thread programming language, it executes code sequentially, instructio by instruction. This also means that the Thread Of Execution can be "blocked" by a heavy process instruction, being unable to go to the next one til finishes its execution.
+Javascript is a Single-Thread programming language, it executes code sequentially, instructio by instruction. This also means that the
+Thread Of Execution can be "blocked" by a heavy process instruction, being unable to go to the next one til finishes its execution.
 
 ```javascript
 function callDatabase() {
@@ -16,15 +72,20 @@ callDatabase(); // blocks thread for 3000ms
 console.log("Hello, world!"); // cannot be achieved
 ```
 
-On the example above, The Thread will be "blocked" inside the callDatabase function's Execution Context, preventing from achieving the "Hello, world!" logging.
+On the example above, The Thread will be "blocked" inside the callDatabase function's Execution Context, preventing from achieving the
+"Hello, world!" logging.
 
-But heavy operations are very common in Web Applications, specially when handling Network Request or calling a Database. So how to handle it without blocking the Thread?
+But heavy operations are very common in Web Applications, specially when handling Network Request or calling a Database. So how to handle it
+without blocking the Thread?
 
 ## Asynchronicity
 
 ### Web Browser Features
 
-The Javascript Engine usually runs on a Web Browser (or in a Node.js environment) that is mostly written in C++. The Browser runs Javascript providing some APIs to call its features. Those features can be called using Facade functions like setTimeout for Timers. Some Web APIs uses the Facade Design Pattern to "hide" the complex estructure behind the function, pretending that the function is Javascript builtin functionality.
+The Javascript Engine usually runs on a Web Browser (or in a Node.js environment) that is mostly written in C++. The Browser runs Javascript
+providing some APIs to call its features. Those features can be called using Facade functions like setTimeout for Timers. Some Web APIs uses
+the Facade Design Pattern to "hide" the complex estructure behind the function, pretending that the function is Javascript builtin
+functionality.
 
 ### Callbacks
 
@@ -64,7 +125,8 @@ setTimeout(printHello, 0);
 console.log("me first?");
 ```
 
-Surprinsingly, the "me first?" logging will be printed first than "hello", even with a 0ms delay. This must happens because it predicts the order of execution.
+Surprinsingly, the "me first?" logging will be printed first than "hello", even with a 0ms delay. This must happens because it predicts the
+order of execution.
 
 Check the following situation:
 
@@ -82,15 +144,20 @@ console.log("bar");
 // hello here?
 ```
 
-Operations that we don't know how much time it will take, like sending a Network Request, or setting a random delay with Math.random(), can cause a series of unexpected behaviors if we don't follow strict rules of Asynchronicity.
+Operations that we don't know how much time it will take, like sending a Network Request, or setting a random delay with Math.random(), can
+cause a series of unexpected behaviors if we don't follow strict rules of Asynchronicity.
 
-In this example, without these rules, the order of execution will be unpredictable and printHello could be triggered anytime in and everytime we intialize the setTimeout task in the program execution.
+In this example, without these rules, the order of execution will be unpredictable and printHello could be triggered anytime in and
+everytime we intialize the setTimeout task in the program execution.
 
 Overall:
 
 **Callback functions provided by Asynchronous operations can only run after all the Synchronous Execution has being finished.**
 
-After the completion of an Asynchronous task, instead of being called right after, the callback function (printHello) will be pushed into a Queue, called Callback Quee (or Task Queue). The component called Event Loop is responsible to push printHello into the Call Stack, so it can be executed. But it will only push it if there's no more Synchronous code (logs of foo and bar) to be executed and the Call Stack is already empty.
+After the completion of an Asynchronous task, instead of being called right after, the callback function (printHello) will be pushed into a
+Queue, called Callback Quee (or Task Queue). The component called Event Loop is responsible to push printHello into the Call Stack, so it
+can be executed. But it will only push it if there's no more Synchronous code (logs of foo and bar) to be executed and the Call Stack is
+already empty.
 
 The Event Loop will constantly make this check as long as the application is running.
 
@@ -98,7 +165,8 @@ The Event Loop will constantly make this check as long as the application is run
 
 ## Promises
 
-Before Promises, Callbacks were the standard approach for handling Asynchronous operations. Callbacks had a lot of different problems that im going to cover later, like:
+Before Promises, Callbacks were the standard approach for handling Asynchronous operations. Callbacks had a lot of different problems that
+im going to cover later, like:
 
 - Nested callbacks leading to Callback Hell
 - Lack of Memory Tracking. Callbacks are triggered without having impact on Javascript Memory
@@ -129,21 +197,28 @@ var promise = new Promise(executor);
 promise.then(displayData);
 ```
 
-A Promise will receive a callback function as an argument (also called executor) to the constructor, so it can be executed immediately when new Promise is invoked, also returning a new Promise object.
+A Promise will receive a callback function as an argument (also called executor) to the constructor, so it can be executed immediately when
+new Promise is invoked, also returning a new Promise object.
 
 The callback function will resolve or reject the Promise.
 
-The Promise object has two essential hidden properties: value and `[[onFulfillment]]`, which is essentially an Array of callbacks. It also has two essential public methods: .then and .catch.
+The Promise object has two essential hidden properties: value and `[[onFulfillment]]`, which is essentially an Array of callbacks. It also
+has two essential public methods: .then and .catch.
 
 .then is a method that receive a callback function. By calling it, the callback function will be pushed to the `[[onFulfillment]]` array.
 
-When the promise is resolved, the callback functions on the `[[onFulfillment]]` will be pushed to the Microtask Queue. The value returned from the resolver will be assigned to the Promise object value property and passed as an argument to the callback function, which has priority over Callback Queue. Existing callback functions on the Microtask Queue will be placed first on the Call Stack over the Callback Queue
+When the promise is resolved, the callback functions on the `[[onFulfillment]]` will be pushed to the Microtask Queue. The value returned
+from the resolver will be assigned to the Promise object value property and passed as an argument to the callback function, which has
+priority over Callback Queue. Existing callback functions on the Microtask Queue will be placed first on the Call Stack over the Callback
+Queue
 
-The same behavior happens with the catch. method, but it is going to handle the promise rejections by pushing the callback function to the `[[onRejection]]` array.
+The same behavior happens with the catch. method, but it is going to handle the promise rejections by pushing the callback function to the
+`[[onRejection]]` array.
 
 We can handle Network Requests with Promises by using the fetch method. The fetch method is two-pronged Facade function.
 
-Is two-pronged because it calls the Network Request Feature on the Web Browser to get data from the internet, and also immediately returns a Promise object.
+Is two-pronged because it calls the Network Request Feature on the Web Browser to get data from the internet, and also immediately returns a
+Promise object.
 
 ```javascript
 function displayData(data) {
@@ -155,7 +230,9 @@ var res = fetch("https://foo.com/bar");
 res.then(displayData);
 ```
 
-This example will work as the same as the example above, but in this case we don't know exactly when the fetch method will going to be finished .As explained above, the Event Loop will be responsible to automatically trigger the displayData function, when pushed to the Call Stack.
+This example will work as the same as the example above, but in this case we don't know exactly when the fetch method will going to be
+finished .As explained above, the Event Loop will be responsible to automatically trigger the displayData function, when pushed to the Call
+Stack.
 
 [Representation of Promise]()
 
@@ -185,7 +262,8 @@ response; // undefined, to early!
 returnedData; // undefined
 ```
 
-Data only lives inside the callback function and cannot be assigned to a variable that runs synchronously, also it cannot return to evaluate a variable.
+Data only lives inside the callback function and cannot be assigned to a variable that runs synchronously, also it cannot return to evaluate
+a variable.
 
 ```javascript
 // Simulating Network Request
@@ -211,7 +289,9 @@ setTimeout(function printData() {
 }, 2000);
 ```
 
-If we decide to run a independent Timer that prints the assigned data to response, it will correctly print the data, because the previous Timer has already run. But in this case we defining exactly the time it will take to get the data, and for Network Requests, that's not the case. There is many reasons why you shouldn't avoid this.
+If we decide to run a independent Timer that prints the assigned data to response, it will correctly print the data, because the previous
+Timer has already run. But in this case we defining exactly the time it will take to get the data, and for Network Requests, that's not the
+case. There is many reasons why you shouldn't avoid this.
 
 Imagine we need that data to make another Request, and so on.
 
@@ -266,17 +346,15 @@ setTimeout(function getUsers() {
           return comment.postId === firstPostId;
         });
 
-        console.log(
-          "4. Got comments for post " + firstPostId + ":",
-          postComments,
-        );
+        console.log("4. Got comments for post " + firstPostId + ":", postComments);
       }, 1000);
     }, 1000);
   }, 1000);
 }, 1000);
 ```
 
-The data must live on the callback function, because the next request depends on the previous one to be already finished. The callback functions will be nested, causing the Callback Hell.
+The data must live on the callback function, because the next request depends on the previous one to be already finished. The callback
+functions will be nested, causing the Callback Hell.
 
 With Promises we can use Promise Chain
 
@@ -446,13 +524,15 @@ request
   });
 ```
 
-One of the huge difference between Promises and Callbacks is that Promises provides us the Promise object, which can allow us to keep track better of the identifier that is holding the promise.
+One of the huge difference between Promises and Callbacks is that Promises provides us the Promise object, which can allow us to keep track
+better of the identifier that is holding the promise.
 
 ### Promises Under The Hood
 
 To understand Promises more further, we need to take a pick on Closures.
 
-Closures are one of the most essential behaviors of Javascript. It allows us to persist data from a function's lexical scope, in coloquiall terms, the function will remember its previous call, even if the Execution Context has already finished.
+Closures are one of the most essential behaviors of Javascript. It allows us to persist data from a function's lexical scope, in coloquiall
+terms, the function will remember its previous call, even if the Execution Context has already finished.
 
 ```javascript
 function outer() {
@@ -472,7 +552,8 @@ persistentIncrement(); // 1
 persistentIncrement(); // 2
 ```
 
-In this example, the function cannot found reference of count++ on its Local Memory. The outer Execution Context has already finished by the time it was called. So before giving up, persistentIncrement will look a its backpack, which contain the persisted count variable.
+In this example, the function cannot found reference of count++ on its Local Memory. The outer Execution Context has already finished by the
+time it was called. So before giving up, persistentIncrement will look a its backpack, which contain the persisted count variable.
 
 ## Iterators
 
@@ -542,13 +623,13 @@ for (elements of arr) {
 }
 ```
 
-Builtin features like spread operator and dynamic for loops will use the override Iterator. 
+Builtin features like spread operator and dynamic for loops will use the override Iterator.
 
 Iterators relies on passing a argument that will be iterated over, but we cant have control of what we want to pass
 
 ## Generators
 
-Generators are Type of Iterators that allows us to control flow of iteration even more by applying rules for each 
+Generators are Type of Iterators that allows us to control flow of iteration even more by applying rules for each
 
 ```javascript
 *function generator() {
@@ -559,27 +640,31 @@ Generators are Type of Iterators that allows us to control flow of iteration eve
 }
 ```
 
-.next() method will iterate over the next element returned by the yield. But instead of only returning the value, the yield is going to "suspend" the function execution, and when the next() is called again, the function will continue to be executed right after it stopped
+.next() method will iterate over the next element returned by the yield. But instead of only returning the value, the yield is going to
+"suspend" the function execution, and when the next() is called again, the function will continue to be executed right after it stopped
 
-
-Javascript is a Single-thread language, it executes code line-by-line, and can only read the next instruction after the previous one has already finished.
+Javascript is a Single-thread language, it executes code line-by-line, and can only read the next instruction after the previous one has
+already finished.
 
 If a heavy instruction is being processed, the Javascript thread will be blocked, not being able to move with the code execution.
 
 ```javascript
 function blocksThreadFor5000ms() {
-    // ...
+  // ...
 }
 
 blocksThreadFor5000ms(); // thread blocked
 console.log("let me print!");
 ```
 
-A heavy operation could be a Network Request, for example. Previously on Javascript, if a network request was made, the whole application would freeze waiting for the request to be finished.
+A heavy operation could be a Network Request, for example. Previously on Javascript, if a network request was made, the whole application
+would freeze waiting for the request to be finished.
 
 To prevent this from happening, Asynchronicity was implemented as an solution for the Single-thread nature of Javascript.
 
-Javascript usually runs on a Web Browser, so the solution was to sent these operations to the Web Browser features. Javascript and the Web Browser are two different runtimes. Instead of relying on Javascript Single-thread nature to handle the Network Request, we let the Browser to handle the operation, allowing the Synchronous execution to keep running.
+Javascript usually runs on a Web Browser, so the solution was to sent these operations to the Web Browser features. Javascript and the Web
+Browser are two different runtimes. Instead of relying on Javascript Single-thread nature to handle the Network Request, we let the Browser
+to handle the operation, allowing the Synchronous execution to keep running.
 
 Before Promises, the solution was to use Callbacks. We would use AJAX to handle Network Requests.
 
@@ -621,9 +706,6 @@ console.log("let me print!");
 
 ## References
 
+# How Asynchronicity works on Javascript
 
-
-
-# How Asynchronicity works on Javascript 
-
-Honestly, not so long ago, i had any idea on how Asynchronicity works under the hood. 
+Honestly, not so long ago, i had any idea on how Asynchronicity works under the hood.

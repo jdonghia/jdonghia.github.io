@@ -1,3 +1,4 @@
+
 A mais de um ano atrás, estava bem desanimado com meu trabalho como dev. Eu utilizava o básico setup de desenvolvimentocom VS Code, um
 terminal Bash e a configuração default do Windows, nada demais. Sentia que eu tinha muito atrito no meu fluxo de trabalho, fazendo coisas
 repetitivas que me deixavam de saco cheio, como clicar em um botão X várias vezes, ou abrir uma aba do Browser quinhentas vezes sendo que
@@ -322,3 +323,35 @@ different IDE that i didn't know. First i tought he found a way to customize his
 - The realization that minimalism (fewer tools, fewer wires, single monitor) yields the highest productivity.
 
 - **Future Goal:** An ultra-clean iMac setup—just the monitor, a single power cable, Magic Keyboard, and Magic Mouse.
+
+
+
+
+- Desanimado com meu fluxo de trabalho
+    - Procurei alternativas de customização do VS Code
+    - Cai em um vídeo do Diego Fernandes com setup minimalista do VS Code utilizando um plugin
+    - Plugin quebrava em toda atualização do VS Code
+
+    - Comecei a ficar irritando com tarefas repetitivas que tomavam tempo: fricção de clique, abrir as mesmas abas, etc...
+    - Tentativas de utilizar mais de um monitor
+    
+
+- Desanimado com meu fluxo de trabalho como desenvolvedor padrão
+- Buscando alternativas de workflow
+- Caí em um video do devaslife criando o portfolio com Neovim
+- Meu primeiro contato com Neovim foi o vídeo do devaslife de setup do Neovim. Comecei utilizando o lazyvim primeiro
+- Playlist do Primeagen sobre vim motions and setup neovim from scratch
+- Configurar do zero estava me dando bastante trabalho. Decidi usar o kickstarter neovim
+- Nesse mesmo tempo, sai do Windows e comecei a testar algumas distros Linux.
+- Testei diversas distros, kubuntu, ubunto, debian
+- Cai em um vídeo do typecraft sobre Arch linux, um setup basico com gnome e i3
+- Comecei a criar meu próprio dotfiles pra salvar as configuracoes
+- Depois comecei a testar o Hyprland, fiquei nele durante bastante tempo
+- No Trabalho, utilzo wsl e tentei voltar pro windows utilizando wsl. Porem não tem boas alternativas de window manager. Komorebi, mas o mais estável
+é o GlazeWM.
+- Arch Linux com Hyprland sempre foi muito bom, mas requer manutenção periódica em coisas habituais de sistema operacional. Isso cansa um pouco mais
+ainda sim é menos pior que usar Windows.
+- Fiquei um grande período utilizando Hyprland, mas decidi que ia migrar para o MacOS por que, não como o Windows, o Aerospace era um tiling manager
+que dava conta do recado e atendia minhas necessidades.
+- O MacOS também é Unix based, então fica mais fácil de transitar entre macOS e Linux
+

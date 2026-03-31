@@ -1,7 +1,7 @@
 ---
 order: 1
-title: "Scopes (PT-BR)"
-subtitle: ""
+title: "Static Scoping (PT-BR)"
+subtitle: "Estudo sobre funcionamento de Scopes no Javascript"
 tags:
   - "Javascript"
   - "Studies"
@@ -56,11 +56,11 @@ Sobre o uso de IA , utilizo como uma forma de complementar meu estudo. A IA é u
 informação, mesmo que ela possa errar. Se caso ela erre, o fato de corrigi-la já é uma ótima maneira de consolidar o conhecimento. No mais,
 eu não utilizo IA pra escrever meus estudos. Acredito que se o objetivo é estudar o assunto, eu mesmo devo escrevê-lo.
 
-#### Tradução
-
 Como sendo um estudo pessoal, também é baseado em opiniões próprias que provavelmente nem todo mundo concorda, o que eu acho absolutamente
 saudável. Eu costumava ser o tipo de pessoa que ficava em cima do muro pra evitar conflitos, mas é impossível agradar todo mundo. Não querer
 agradar todo mundo é sinal de maturidade. Mas isso não quer dizer que não devemos ser humildes em admitir nossos erros.
+
+#### Tradução
 
 Costumo escrever mantendo algumas terminologias em inglês. Não faço a tradução literal de terminologias que acredito que não caibam uma
 tradução ou que não funcionem muito bem em uma passagem. Por exemplo, não soa muito bem o uso da palavra "escopo" a todo momento, então
