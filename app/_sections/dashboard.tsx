@@ -41,6 +41,10 @@ function getDateValue(date: string): number {
 
 export function Dashboard(): React.JSX.Element {
   const writing = getWritingEntries<WritingEntry>(({ chapter, slug, data, content }) => {
+    if (chapter === "wip") {
+      return null;
+    }
+
     if (typeof data.order !== "number") {
       return null;
     }
