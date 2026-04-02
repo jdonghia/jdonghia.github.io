@@ -1,88 +1,71 @@
 ---
+
 order: 1
-title: "Static Scoping (PT-BR)"
-subtitle: "Estudo sobre funcionamento de Scopes no Javascript"
+title: “Static Scoping”
+subtitle: "How Scopes work in JavaScript.”
 tags:
-  - "Javascript"
-  - "Studies"
-date: "Mar 2026"
+
+* “JavaScript”
+* “Studies”
+date: “Mar 2026”
+
 ---
 
-## Introdução
+Introduction
 
-Já faz alguns meses desde que decidi me aprofundar mais em Javascript. Já queria ter feito isso há algum tempo atrás, mas nunca havia
-priorizado isso ou acho que simplesmente deixei a procrastinação vencer.
+It’s been a few months since I decided to deep dive into JavaScript. I had wanted to do that for a while, but I just never prioritized it.
 
-Com o crescimento da IA, estamos colocando mais camadas de abstração no conhecimento de programação do que nunca. Sendo assim, provavelmente
-a maioria dos devs não concordaria com a importância de aprender conceitos fundamentais como Scopes (aqui falo especificamente sobre
-Javascript, mas vale pra qualquer outra linguagem).
+AI is growing by leaps and bounds, and we’re adding more layers of abstraction in programming knowledge than ever. Most software engineers
+probably wouldn’t agree on the importance of learning fundamental concepts like Scopes (I am referring specifically to JavaScript, but it
+applies to any other programming language).
 
-Estava pesquisando sobre certificações oficiais do GitHub e acabei caindo na página do [Student Pack](https://education.github.com/pack), no
-qual eu já utilizava alguns recursos como o Copilot e lembrei que, além dele, eles oferecem vários outros benefícios: Créditos na Amazon,
-Free Domains, GitHub Actions, etc. Aproveitei pra verificar os conteúdos novamente, e um deles me chamou atenção. Eu já conhecia a
-plataforma e já tinha visto alguns conteúdos deles no Youtube, mas não sabia que eles possuíam parceria com o GitHub, falo do
-[FrontendMasters](https://frontendmasters.com/).
+I was searching for official GitHub certifications, and ended up on the GitHub Student Pack page, from
+where I was already using Copilot. They offer many benefits like AWS Credits, free domains, GitHub Actions, and more. I was looking at the
+perks again, and one caught my attention. I did know about them, but not that they had a partnership with GitHub. I am talking about
+FrontendMasters.
 
-Sinceramente, eu acho que não existe conteúdo melhor na internet focado em frontend do que o FrontendMasters. É um benefício oferecido pra
-qualquer estudante inscrito no GitHub Student Pack, por 6 meses, **GRATUITAMENTE**. Particularmente eu acho que todo estudante ou
-desenvolver frontend deveria estudar o conteúdo oferecido por eles. O único porém é que a plataforma é toda em inglês e não possui legendas
-em português. De qualquer forma, eu acho que pra esse caso vale muito a pena o esforço de aprender a língua.
+Personally, I don’t think there’s a better place to learn frontend engineering than FrontendMasters. It’s a FREE benefit for any student
+enrolled in the Student Pack for 6 months. I would say that every student or frontend engineer should learn from their content.
 
-Fiz essa tangente pois estudei e aprendi sobre Scopes no Javascript com um dos tutores mais incríveis da plataforma, **Kyle Simpson**, no
-workshop de [Deep Javascript Foundations](https://frontendmasters.com/courses/deep-javascript-v3/). Pessoalmente, eu acho a didática dele
-fantástica. E esse estudo vai ser baseado nos ensinamentos dele com a minha perspectiva e considerações. Além do Deep Foundations, ele
-possui outros workshops incríveis como [Rethinking Asynchronous Javascript](https://frontendmasters.com/courses/rethinking-async-js/) e
-[Functional-Light Javascript](https://frontendmasters.com/courses/functional-javascript-v3/).
+I made this tangent because I learned Scopes with one of the best instructors on the platform, Kyle Simpson, at the
+Deep JavaScript Foundations workshop. He has an amazing teaching style, and this
+study will be based on his teachings, with my perspective and considerations. Besides Deep Foundations, he has other great workshops like
+Rethinking Asynchronous JavaScript and
+Functional-Light JavaScript.
 
-A ideia dessa introdução foi dar um pouco mais de contexto a respeito desse artigo. Diante disso, vou separar esse estudo em dois artigos:
-**Static Scoping** e **Dynamic Scoping**. Não existe dynamic scoping no Javascript, mas vou fazer dessa forma por que a keyword `this` é um
-dinamicismo na linguagem e vale um estudo separado.
+That said, I’ll separate this topic into two: Static Scoping and Dynamic Scoping. There’s no such thing as dynamic scoping in
+JavaScript, but I’ll structure this way since the this keyword introduces dynamicism in the language and deserves a separate topic.
 
-Provavelmente vou explicar em cima de diversas abstrações como Abstraction Syntax Tree e outros fundamentos de Compilers, no qual não me
-aprofundei. Evito me aprofundar demais com temas que não são prioritários no assunto que estou estudando. É como Carl Sagan disse _"If you
-wish to make an apple pie from scratch you must first invent the universe"_ ou _"Se quer fazer uma torta de maçã do zero, precisa inventar o
-Universo"_. Já cai em muitos problemas desse tipo por que gosto de entender os assuntos em sua profundidade, o problema é que caímos em um
-buraco sem fundo e não sabemos quando parar, isso nos desmotiva por que achamos que não somos capazes de entender o assunto como um todo.
-Basicamente é dar palco pra Síndrome de Impostor.
+I’ll explain without getting into concepts like Abstract Syntax Tree and other Compiler fundamentals, which I haven’t deep-dived into. I
+prefer to avoid subjects that are not a priority in the current study. It’s like what Carl Sagan said:
 
-## Disclaimer
+If you wish to make an apple from scratch, you must first invent the universe.
 
-Esse estudo é uma maneira pessoal de consolidar o meu conhecimento aprendido de um determinado assunto. O conhecimento compartilhado aqui
-tem como base minha percepções e perspectivas. Particularmente, acho que uma das melhores maneiras de aprender é explicando, pra você mesmo
-ou pra outras pessoas. Não tenho a intenção de agir como professor e vou cometer erros. Se houver qualquer equívoco da minha parte, o
-feedback sempre será bem-vindo.
+I had already fallen into this trap because I like to understand things in depth. The problem is that we end up falling into a rabbit hole,
+not knowing when to stop, and this is demotivating. We feel we cannot understand the whole thing. It’s basically fueling the Impostor
+Syndrome.
 
-Sobre o uso de IA , utilizo como uma forma de complementar meu estudo. A IA é uma ótima ferramenta pra checar a veracidade de uma
-informação, mesmo que ela possa errar. Se caso ela erre, o fato de corrigi-la já é uma ótima maneira de consolidar o conhecimento. No mais,
-eu não utilizo IA pra escrever meus estudos. Acredito que se o objetivo é estudar o assunto, eu mesmo devo escrevê-lo.
+Disclaimer
 
-Como sendo um estudo pessoal, também é baseado em opiniões próprias que provavelmente nem todo mundo concorda, o que eu acho absolutamente
-saudável. Eu costumava ser o tipo de pessoa que ficava em cima do muro pra evitar conflitos, mas é impossível agradar todo mundo. Não querer
-agradar todo mundo é sinal de maturidade. Mas isso não quer dizer que não devemos ser humildes em admitir nossos erros.
+This study is a personal way to consolidate my knowledge of a specific subject, and the content shared here reflects my perceptions and
+perspectives. I believe that explaining is one of the best ways to learn. I do not intend to act as a teacher, and I’ll
+probably make mistakes. Feedback is always welcome.
 
-#### Tradução
+About AI, I do use it to complement my studies. AI is a great tool to check information, even if it gets it wrong. Fixing its mistakes is
+already a good way to consolidate knowledge. But I do not use to write my articles. If the goal is to study, I believe I should do it on my
+own.
 
-Costumo escrever mantendo algumas terminologias em inglês. Não faço a tradução literal de terminologias que acredito que não caibam uma
-tradução ou que não funcionem muito bem em uma passagem. Por exemplo, não soa muito bem o uso da palavra "escopo" a todo momento, então
-transito entre "Scopes" e "Escopos".
+As a personal study, it’s based on my personal opinions, and not everyone will agree; that’s completely natural. I used to be a
+fence-sitter, but it’s impossible to please everyone. Not wanting to please everyone is a sign of maturity, but that doesn’t mean we
+shouldn’t be humble and admit our mistakes.
 
-Já faz um tempo que estou tentando escrever alguns estudos sobre o que estou aprendendo. Antes, estava tentando escrever tudo em inglês e
-não deu muito certo. Como não é minha língua nativa, é realmente difícil conseguir alcançar o mesmo tipo de expressividade do que com o
-português.
+How Scopes Work
 
-Um dos motivos pelo qual estava tentando escrever integralmente em inglês é pra evitar o uso inadequado de terminologias traduzidas, que
-particularmente acho que geram um certo desconforto e confusão nos estudos. Prefiro utilizar a terminologia original do que traduzir ao pé
-da letra. Talvez chegue um momento em que eu consiga alcançar o mesmo tipo de expressividade em inglês, mas não é prioridade por agora.
+Most software engineers think that JavaScript is an interpreted language. But how does it throw errors before code execution?
 
-## Como Scopes funcionam?
+If you try to execute this simple function, an error will be thrown and ”Hello, World” will not be printed, even if it was written before
+bar declaration.
 
-Ao contrário do senso comum, Javascript não é uma linguagem interpretada, se fosse, como poderia retornar um Erro antes mesmo da execução do
-programa?
-
-Se você tentar executar essa function simples, um erro será retornado e o `"Hello, World"` não será printado, mesmo sendo escrito antes da
-declaração de `bar`.
-
-```javascript
 function foo() {
   console.log("Hello, World");
 
@@ -92,167 +75,148 @@ function foo() {
 foo();
 
 // SyntaxError: Unexpected token ';'
-```
 
-Porque isso acontece?
+Why?
 
-Porque o **Compiler** joga o erro antes mesmo do **Runtime** ser alcançado.
+The Compiler throws a SyntaxError before achieving Runtime.
 
-O Javascript é uma linguagem **two-pass**. De maneira simplificada, ela possui duas fases:
+JavaScript is a two-pass language. Simply speaking, it has two phases:
 
 1. Compilation Phase
-2. Execution Phase (ou Runtime)
+2. Execution Phase (Runtime)
 
-## Compilation Phase
+Compilation Phase
 
-A Compilation Phase vai ser responsável por mapear os escopos e seus respectivos identificadores (functions, variáveis ou propriedades).
-Isso é possível por que escopos e identificadores são previsíveis e estáticos. Escopos não podem mover "físicamente" pra outro lugar no
-código e identificadores uma vez declarados terão seu espaço alocado na memória, mesmo que não sejam utilizados em **Runtime** e liberados
-posteriormente pelo **Garbage Collector**. Basicamente, estamos nos aproveitando do fato de sua previsibilidade pra otimizar o código pro
-Runtime. Se podemos fazer agora, aliviamos o peso pro processo de execução.
+The Compile Pass maps scopes and identifiers (functions, variables, properties). This is possible because they’re predictable and static.
+Scopes cannot move “physically” from one place to another, and identifiers once declared will have their space allocated in memory, even if
+they are not used later and freed by the Garbage Collector. We’re using this fact to optimize the code for the Runtime.
 
-### Buckets and Marbles
+Buckets and Marbles
 
-No workshop, o Kyle explica usando uma metáfora com **Buckets and Marbles**, ou baldes e bolinhas de Gude. Buckets são os escopos, Marbles
-são os identificadores. Vou utilizar a terminologia em inglês por que acho baldes e bolinhas meio tosco.
+In the workshop, Kyle explains using the Buckets and Marbles metaphor. Buckets are scopes, and Marbles are identifiers. Each scope is a
+Bucket, and each identifier is a Marble placed on its corresponding Bucket. Scopes are, metaphorically speaking, Buckets inside Buckets.
 
-Cada escopo é um Bucket, cada identificador é um Marble colocado em seu respectivo Bucket. Escopos dentro de escopos são, metaforicamente
-falando, Buckets dentro de Buckets. Nesse exemplo, cada Bucket tem sua cor:
+Each Bucket has its own color:
 
-```javascript
-// Escopo Global: Bucket vermelho 🟥
+// Global Scope: Red Bucket 🟥
 
-// foo: Marble vermelho 🔴
+// foo: Red Marble 🔴
 function foo() {
-  // Escopo de foo: Bucket azul 🟦
+  // foo scope: Blue Bucket 🟦
 
-  var bar; // bar: Marble azul 🔵
+  var bar; // bar: Blue Marble 🔵
 }
-```
 
-1. O Bucket vermelho 🟥 representa o escopo global;
-2. A function `foo` é alocada no Bucket vermelho 🟥 como um Marble vermelho 🔴;
-3. O Bucket azul 🟦 representa o escopo da function `foo`;
-4. `bar` é alocado no Bucket azul 🟦 como um Marble azul 🔵;
+1. The Red Bucket 🟥 represents the global scope.
+2. foo is placed on the Red Bucket 🟥 as a Red Marble 🔴.
+3. The Blue Bucket 🟦 represents the foo scope.
+4. bar is placed on the Blue Bucket 🟦 as a Blue Marble 🔵.
 
-O mapeamento dos identificadores e seus escopos é feito pelo processo de comunicação entre o **Scope Manager** e o **Compiler**. No
-workshop, o Kyle explica essa comunicação como se fosse uma conversa entre pessoas.
+The mapping is made by the Scope Manager and the Compiler. Kyle explains this communication like two people talking to each other.
 
-Utilizando o exemplo acima como referência:
+Using the example above:
 
-**Compiler**: "Ei, Scope Manager. Tenho uma declaração formal de `foo` no Bucket vermelho. Já ouviu falar disso?"
+Compiler: “Hey, Scope Manager. I have a formal declaration of foo on the Red Bucket. Have you heard of this before?
 
-**Scope Manager**: "Nunca ouvi falar, mas aqui está o seu Marble vermelho".
+Scope Manager: “Never heard before, but here’s your marble.”
 
-_O Marble vermelho é colocado no Bucket vermelho_.
-
-**Compiler**: "Ei, Scope Manager. `foo` na verdade é uma function, vamos precisar de um Bucket pra ele".
-
-_O Bucket azul é criado e alocado dentro do Bucket vermelho._
-
-Você pode pensar nisso como se fossem Matrioskas ou Bonecas Russas. Aquelas bonecas que entram uma dentro das outras. Também você pode fazer
-um paralelo com o sistema de boxing do CSS e do DOM. Uma div dentro de um div, etc. Não deve ser coincidência porque provavelmente esses
-exemplos utilizam Árvores como estrutura de dados.
-
-#### Duplicação em Scopes diferentes
-
-Em casos de identificadores com o mesmo label, mas em escopos diferentes:
-
-```javascript
-// Bucket vermelho
-var foo; // Marble vermelho
-
-function bar() {
-  // Bucket azul
-  var foo; // Marble azul
-}
-```
-
-Por mais que possuam o mesmo label , estamos falando de escopos diferentes. Um identificador de mesmo label `foo` é alocado como um Marble
-azul dentro do Bucket azul. Porém, o `foo` do Bucket vermelho não pode mais ser referenciado no Bucket azul. Isso é conhecido como
-**Shadowing**.
-
-#### Duplicação no mesmo Scope
-
-Em casos de identificadores com o mesmo label, no mesmo escopo:
-
-```javascript
-// Bucket vermelho
-
-var foo; // Marble vermelho
-
-var foo; // Marble vermelho?
-```
-
-Os dois são lidos. Mas só um permanece, baseado no seu tipo.
-
-Na segunda declaração de `foo`:
-
-**Compiler**: "Ei, Scope Manager. Tenho uma declaração formal de `foo` no Bucket vermelho. Já ouviu falar disso?"
-
-**Scope Manager**: "Sim".
-
-_O Compiler segue e nada acontece._
-
-Casos com function declarations ou declarações com `let` e `const` funcionam de maneira diferente, mas a ideia é a mesma:
-
-- **Function declarations**: a function será sobrescrita.
-- **let, const**: não podem ser redeclarados por que tem Strictly Behavior e um `SyntaxError` é lançado. Vou explicar mais sobre
-  `'strict mode'` mais pra frente.
-
-#### Function Declarations x Function Expressions
-
-functions declarations e function expressions são mapeados de maneiras distintas pelo Compiler.
-
-```javascript
-// Bucket vermelho
-
-function foo() {} // Marble vermelho
-
-var bar = function apple() {
-  // Marble azul
-  // Bucket azul
-};
-
-bar();
-```
-
-A primeira é uma function declaration, o método tradicional de escrever functions. A outra é uma function expression. Uma function é uma
-function expression se a keyword `function` não é a primeira expressão da linha. Não vou me aprofundar muito no tema, porque quero escrever
-um estudo separado pra functions em geral.
-
-O que importa no nosso caso é que qualquer function expression tem seu Marble alocado no seu próprio Bucket, e só pode ser chamado dentro
-dele mesmo. Ele também é read-only.
-
-No exemplo acima, `bar` guarda uma referência de `apple`. Então obviamente chamar `bar` no escopo global é válido.
-
-```javascript
-// Bucket vermelho
-(function foo() {
-  // Marble azul
-  // Bucket azul
-});
-
-foo(); // ReferenceError
-```
-
-Porém, em um caso como esse, `foo` é uma function expression e não vai ser acessível ao Bucket vermelho, pois seu Marble pertence ao seu
-próprio Bucket. Esse pattern é utilizado pra criar IIFEs (Immediately Invoked Function Expression), que estão presentes em qualquer lib de
-bundling, como _Webpack_ ou _Vite_. Como falei acima, vou deixar pra falar mais sobre IIFEs em um post dedicado a functions.
+The Red Marble foo is placed on the Red Bucket.
 
 ---
 
-### Scope Units
+Compiler: “Hey, Scope Manager. foo is actually a function; we’ll need another bucket.”
 
-Dependendo do tipo de declaração, o identificador se atrela a diferentes Scope Units.
+The Blue Bucket (foo scope) is placed inside the Red Bucket (global scope).
 
-#### Block Scope
+You can think of it like Matryoshka dolls, the ones that fit inside one another. Or you can make a parallel with the boxing system from
+CSS/HTML. It’s not a coincidence because they’re probably using Trees as a data structure.
 
-Só é acessível dentro dos brackets `{ }`. Variáveis declaradas com `let` e `const` são Block Scoped.
+Duplication on different scopes
 
-Exemplo:
+Let’s take two identifiers with the same label, but in different scopes:
 
-```javascript
+// Red Bucket
+var foo; // Red Marble
+
+function bar() {
+  // Blue Bucket
+  var foo; // Blue Marble
+}
+
+Even though they have the same label, we’re talking about completely different scopes.
+
+An identifier with the same label foo is placed as a Blue Marble inside the Blue Bucket. Although the foo from the Red Bucket cannot be
+referenced anymore on the Blue Bucket. This is known as Shadowing.
+
+Duplication on the same scope
+
+In case of identifiers with the same label, on the same scope:
+
+// Red Bucket
+
+var foo; // Red Marble
+
+var foo; // Red Marble?
+
+Both are read, but they won't coexist. They’ll behave differently based on their declaration type.
+
+On the second declaration of foo:
+
+Compiler: “Hey, Scope Manager. I have a formal declaration of foo on the Red Bucket. Have you heard of this before?”
+
+Scope Manager: “Yes”.
+
+Then nothing happens.
+
+Function declarations, function expressions, and declarations with let or const work differently:
+
+* Function declarations: the function will be overridden.
+* let, const: cannot be redeclared since they act strictly. I’ll explain more about ”strict mode” later.
+
+Function declarations x function expressions
+
+The Compiler maps function declarations and function expressions differently:
+
+// Red Bucket
+
+function foo() {} // Red Marble
+
+var bar = function apple() {
+  // Blue Marble
+  // Blue Bucket
+};
+
+bar();
+
+The first one is a function declaration, the standard way to write functions. The other one is a function expression. A function is only a
+function expression if the keyword function is not the first expression in the code line. I’ll not go into depth about it because I’ll
+write a dedicated study for functions in general.
+
+What matters in our case is that any function expression has its Marble placed on its own Bucket, and can only be called in its own scope.
+It’s also read-only.
+
+In the example above, bar holds a reference to apple. So, calling bar in the global scope will work.
+
+// Red Bucket
+(function foo() {
+  // Blue Marble
+  // Blue Bucket
+});
+
+foo(); // ReferenceError
+
+But in this example, foo is a function expression, and it’s not accessible on the Red Bucket since its Marble belongs to its own Bucket.
+This pattern is useful to create IIFEs (Immediate Invoked Function Expression), which are present in any bundling library like Webpack or
+Vite. As mentioned earlier, I’ll discuss IIFEs in a dedicated study on functions.
+
+Scope Units
+
+Based on its declaration type, the identifier will attach to different Scope Units.
+
+Block Scope
+
+Only accessible inside brackets { }. let and const variables are block-scoped.
+
 function foo() {
   {
     let bar = "bar";
@@ -262,21 +226,17 @@ function foo() {
 }
 
 foo();
-```
 
-Eu nunca usei esse tipo de estrutura com brackets soltos e achei bem interessante a exemplificação com eles. Qualquer acesso a bar fora do
-escopo de bloco retorna um `ReferenceError`.
+I have never used this syntax with brackets before, but it is still a good visual example. Any access outside bar scope throws a
+ReferenceError
 
-Block Scoping é útil se você precisa de variáveis temporárias que não precisam fazer parte do escopo inteiro da function. Condicionais,
-expressões de try/catch e while são um exemplo disso. Block Scoping também é uma alternativa ao uso de IIFEs.
+Block Scoping is useful when you need temporary variables that don’t need to be accessible to the entire function scope. Some cases will be
+conditionals, try/catch, and while expressions. Block Scoping is also an alternative for IIFEs.
 
-#### Function Scope
+Function Scope
 
-Acessível em todo o escopo da function. Variáveis declaradas com `var` são Function Scoped.
+Accessible across the entire function scope. var variables are function-scoped.
 
-Exemplo:
-
-```javascript
 function foo() {
   {
     var bar = "bar";
@@ -286,17 +246,13 @@ function foo() {
 }
 
 foo();
-```
 
-Mesmo em Block Scope, a varíavel fica acessível ao escopo da function `foo`.
+Even inside the Block Scope, the variable stays accessible to the foo scope.
 
-#### Hybrid Scope
+Hybrid Scope
 
-Functions são Hybrid Scoped, funcionam tanto em Block Scope quanto em Function Scope. São assim por questões históricas de compatibilidade.
+Functions are Hybrid Scoped, meaning they work in both Block Scope and Function Scope.
 
-Exemplo:
-
-```javascript
 function foo() {
   // bar();
 
@@ -310,28 +266,24 @@ function foo() {
 }
 
 foo();
-```
 
-#### let x var
+let x var
 
-Vou abrir um parentêses bem grande nessa seção:
+I’m going to open a big parenthesis here:
 
-O Kyle faz um paratênses no workshop explicando que `let` não é uma substituição de `var` na linguagem, considerado bastante polêmico, no
-qual achei bem interessante. O que você mais vê em posts no Reddit de Javascript é essa discussão sobre qual keyword usar, o que pode pode
-parecer inútil, mas o assunto vai além disso.
+In the workshop, Kyle explains that let is not a replacement for var .  There are many Reddit posts
+talking about this. This discussion might seem a waste of time, but the subject goes beyond that.
 
-No meu dia-a-dia, não usava `var` não por que não concordava com o uso, mas simplesmente por que tinha adotado `let` e `const` como hábito.
-Já vi gente relevante na internet afirmando que `var` é um anti-pattern e não deveria ser usado sem nenhum embasamento a respeito dessa
-afirmação. No geral, dizem que `var` ainda existe por questões históricas de compatibilidade e que era utilizado em aplicações que hoje são
-consideradas legado.
+In my day-to-day, I haven’t been using var, not because I don’t agree with its usage, but simply because I have adopted let and
+const as a habit. I saw relevant people on the internet saying that you shouldn’t use var in any case, without any real explanation about
+it. In fact, I saw some saying it still exists due to backward compatibility, especially in legacy projects.
 
-De maneira nenhuma `let` pode ser considerado uma substituição de `var`. Se você resolver dar um search and replace na sua aplicação ou em
-qualquer projeto legado, a chance de seu programa quebrar é bem alta. Como explicado acima, `var` é Function Scoped. No exemplo, se você
-substituir `var` por `let`, ele vai retornar um ReferenceError, por que a variável vai passar a ser Block Scoped, simples assim.
+In any case, let can be considered a replacement for var. If you decide to do a search and replace on your project, the chances of you
+breaking your application are very high. As explained above, var is function-scoped. In the example above, if you replace var with let, a
+ReferenceError will be thrown, and the variable will be block-scoped.
 
-> Então nesse caso vou subir a declaração de let pro nível da function e atribuir o valor a ela dentro do escopo de bloco.
+So I’ll move the variable declaration to the function level and assign its value in the block scope.
 
-```javascript
 function foo() {
   let bar;
 
@@ -343,107 +295,92 @@ function foo() {
 }
 
 foo();
-```
 
-Não é mais fácil simplesmente deixar a declaração junto com o assignment usando `var`?
+Why not simply use var?
 
-`var` e `let` tem aplicações diferentes. É verdade que pra diversos casos eles funcionam de maneira similar. Se `let` está no nível do
-escopo da função, então ele funciona como `var`. Mas por que não usar `var` logo? Usar `let` vai indicar um erro semântico da keyword. É
-como usar uma faca pra parafusar ao invés de usar uma chave Phillips, vai funcionar, mas não é a ferramenta correta.
+var and let have different usages. It is true that in some cases they work similarly. If a let variable is in the function scope, it’ll
+work like var. But why not use var?. Using let indicates incorrect semantic usage of the keyword.
 
-Se você precisa de um escopo de bloco, usa o `let` (ou o `const`), se precisa de um escopo de função, usa o `var`, um não é substituto do
-outro.
+Use let for block-scoping and var for function-scoping; one does not replace the other.
 
-Honestamente, antes eu não sabia de nada disso e só não usava `var`, mas nunca critiquei o não uso sem ter embasamento. Quando aprendi,
-passei a aplicar nos meus projetos com mais frequência. O problema é que a grande maioria dos desenvolvedores não o usam por que virou senso
-comum. A mesma situação se aplica pro uso de arrow functions. Arrow functions passaram a ser o novo "padrão" pra declaração de functions na
-linguagem e perderam seu propósito. Elas foram implementadas pra resolver o `this` lexicamente, não pra substituir qualquer tipo de
-function. Eu mesmo utilizava arrow functions por puro hábito.
+Honestly, I didn’t know about this before, and I didn’t take var as an option. When I learned it, I started using it more frequently in my
+projects. The problem is that most software engineers will not even try to use var since it’s become common practice. The same goes for
+arrow functions. Arrow functions have become the standard way to declare functions and have lost their purpose. They were implemented to
+resolve this lexically, not to replace any function. Even I was using it as a habit.
 
-Kyle bate bastante nesse martelo e reforça que nós desenvolvedores devemos conhecer as ferramentas que estão ao nosso dispor. Não estou
-dizendo que você deve adotar `var`, mas sim que deveríamos entender antes de abominar completamente seu uso, e eu concordo com ele nesse
-sentido. O que eu não concordo é espalhar desinformação como verdade absoluta. Eu dúvido muito que esses desenvolvedores, se questionados,
-saberiam explicar o real motivo de não usar `var`. O Javascript de fato tem diversos problemas, assim como qualquer outra linguagem muito
-utilizada, mas casos como esse parecem ser só desconhecimento ou ignorância.
+Kyle reinforces this by saying that software engineers should know their tools better. I am not saying to adopt var, but that we should at
+least understand before discarding it, and I agree with this. What I do not agree with is spreading misinformation as an absolute truth. I doubt
+that, if questioned, developers who abominate its usage could explain the real reason why they do not use it.
 
-Existem argumentos relevantes do porque não usar `var`. O uso de `var` é mais suscetível a erros inesperados. Com `var`, você pode fazer
-redeclaração da variável, se alguém decidir utilizar o mesmo label, a variável vai ser sobrescrita. Entretando, redeclarar uma varíavel no
-mesmo escopo pode ser necessário pro seu caso. Já `let` e `const` nem compilam se você tentar redeclarar a variável.
+I agree that JavaScript has many problems, like any other popular programming language, but cases like this sound more like ignorance to me.
 
-Se você tentar acessar um `var` antes da sua declaração, por causa do **Hoisting** (próximo tópico), ele vai retornar `undefined`. `let` e
-`const` vão retornar um **Temporal Dead Zone** Error (também faz parte do próximo tópico).
+There are indeed several arguments against using var, for example, unexpected behavior. var allows you to redeclare
+variables. If someone uses the same label to assign another value, the variable will be overwritten. On the other hand, let and
+const won’t even compile if you try to redeclare the variable. Maybe redeclaring a variable might be useful in your case.
 
-Além disso, ferramentas como _Typescript_ e _Eslint_ sinalizam esses erros nas IDEs, o que também facilita pra prevenir esses comportamentos
-indesejados.
+If you try to access a var variable before its declaration, it will return undefined (this is Hoisting, which I’ll cover in the next topic).
+let and const will throw a Temporal Dead Zone Error (also covered in the next topic).
 
-Mesmo assim, ainda tenho ressalvas com o uso de `var`, por que frameworks populares como o próprio _React_ impõem seus próprios padrões, e
-usar `var` acaba confundindo ainda mais outros desenvolvedores. O problema também é relacionado ao tipo de cultura que criamos em volta da
-linguagem.
+Besides that, tools like TypeScript and ESLint will warn about these errors in IDEs like VS Code or Neovim, making it easier to prevent them.
+situations.
 
-Enfim, isso aqui já ficou gigantesco, mas achei que valeria a pena me estender nesse assunto.
+I still have my caveats with var because popular frameworks like React impose their own standards, and using var may confuse other
+developers even more.
 
----
+Anyway, this section has already gotten huge, but I thought it would be worth discussing further.
 
-### Hoisting
+Hoisting
 
-Hoisting é um termo bastante comum que é usado pra resumir o que expliquei previamente. É um termo que não existe na especificação do
-Javascript.
+Hoisting briefly explains most of what I explained before. It is not a term in the JavaScript specification.
 
-`var`, `let`, `const` e functions são "Hoisteados" de maneiras diferentes. Há um equívoco comum em achar que keywords como `const` e `let `
-não são "Hoisteados". Pra facilitar, exemplos de caso de Hoisting são mais relacionados ao acesso de identificadores antes da sua
-declaração.
+var, let, const, and functions are hoisted differently. There’s a common misunderstanding that const and let are not hoisted.
 
-- **Function Declarations**: são inicializadas.
+To simplify, hoisting is more about accessing identifiers before their declarations.
 
-```javascript
+Function Declarations: they are initialized.
+
 console.log(func()); // Hello, World
 
 function func() {
   return "Hello, World";
 }
-```
 
-- **var**: inicializados com o valor `undefined`.
+* var: initialized as undefined.
 
-```javascript
 console.log(foo); // undefined
 
 var foo = "bar";
-```
 
-- **const, let**: não são inicializados e ficam na Temporal Dead Zone (TDZ).
+* const, let: They are kept uninitialized and stay in the Temporal Dead Zone (TDZ).
 
-```javascript
 console.log(foo);
 
 const foo = "bar";
 
 // ReferenceError: Cannot access 'foo' before initialization
-```
 
-Qualquer acesso a `let` ou `const` antes de sua declaração te retorna um `ReferenceError`.
+Any access to let or const before its declaration will throw a ReferenceError.
 
-#### Temporal Dead Zone
+Temporal Dead Zone
 
-O TDZ veio com a implementação das keywords `const` e `let`, no Ecma Script 2015 (ES5).
+TDZ was introduced with the implementation of the const and let keywords in ES5.
 
-O que explica o fato de variáveis `const` permanecerem na TDZ é que não faria sentido lermos uma constante com o valor de `undefined` antes
-de sua declaração, teoricamente ela teria seu valor re-atribuído em Runtime, o que seria ilógico pra uma constante. Já que aplicaram a regra
-pra `const`, decidiram aplicar pra `let` também.
+The fact that explains why const stays on TDZ is that it wouldn’t make sense to read a constant as undefined before its declaration.
+Theoretically, its value would be reassigned at Runtime, which could be illogical for a constant. They thought it would be a good idea to
+apply the same rule to let.
 
-## Execution Phase (Runtime)
+Execution Phase (Runtime)
 
-Finalmente, depois da etapa de Compilação, quem assume é o Runtime. Como o Javascript é Single-Threaded, o código será executado linha por
-linha, um após o outro.
+Finally, after the Compile Pass, the Runtime takes over. JavaScript is Single-Threaded, so the code will be executed line by line, one after the
+other.
 
-O mesmo tipo de comunicação feita na etapa de Compilação é feita no Runtime, dessa vez sendo o Runtime e Scope Manager. A comunicação é
-feita baseada no tipo de referência:
+The same communication with the Scope Manager made on the Compile Pass will be made on Runtime. The communication is based on the identifier
+reference:
 
-#### Target Reference (Left-hand side)
+Target Reference (Left-hand side)
 
-Basicamente, é quando o identificador recebe um valor:
+Basically, it’s a Target Reference when the identifier receives a value:
 
-```javascript
 function bar() {
   foo = "bar"; // left-hand side
 
@@ -451,13 +388,11 @@ function bar() {
 }
 
 bar(); // right-hand side
-```
 
-#### Source Reference (Right-hand side)
+Source Reference (Right-hand side)
 
-Qualquer tipo de leitura do identificador:
+Any read operation of the identifier:
 
-```javascript
 function bar() {
   foo = "bar"; // left-hand side
 
@@ -465,42 +400,39 @@ function bar() {
 }
 
 bar(); // right-hand side
-```
 
-Exemplo usando a metáfora:
+Example using the metaphor:
 
-**Runtime**: "Ei, Scope Manager. Tenho `foo` em uma posição de Target Reference. Você tem a referência nesse escopo?"
+Runtime: “Hey, Scope Manager. I have foo in a target reference position. Do you have its reference?”
 
-**Scope Manager**: "Sim, aqui está o seu Marble".
+Scope Manager: “Yes, here’s your Marble”.
 
-_A string `bar` é atribuída a `foo`_
-
----
-
-**Runtime**: "Ei, Scope Manager. Tenho `foo` em uma posição de Source Reference. Você tem a referência nesse escopo?"
-
-**Scope Manager**: "Sim, aqui está o seu Marble".
-
-_O `console.log` é chamado com o `foo` como argumento._
+The string bar is assigned to foo.
 
 ---
 
-**Runtime**: "Ei, Scope Manager. Tenho `bar` em uma posição de Source Reference. Você tem a referência nesse escopo?"
+Runtime: “Hey, Scope Manager. I have foo in a source reference position. Do you have its reference?”
 
-**Scope Manager**: "Sim, aqui está o seu Marble".
+Scope Manager: “Yes, here’s your Marble”.
 
-_A function `bar` é chamada._
+console.log is called with the argument `foo`.
 
-### Lexical Behavior
+---
 
-Sem entrar em uma descrição muito técnica do termo, o comportamento léxico do Javascript diz a respeito de como a linguagem busca a
-referência de identificadores fora do seu escopo atual.
+Runtime: “Hey, Scope Manager. I have bar in a source reference position. Do you have its reference?”
 
-O Kyle faz uma analogia a busca de um apartamento de número X em um prédio. Se o prédio não possuí uma numeração por andares, você acessa o
-andar 1 e procura pelo número apartamento. Se não encontrar no andar atual, você procura no segundo andar, e assim por diante. Com esse
-exemplo, fica mais fácil de entender o comportamento Léxico:
+Scope Manager: “Yes, here’s your Marble”.
 
-```javascript
+The function bar is called.
+
+Lexical Behavior
+
+The Lexical Behavior explains how the Runtime searches for the identifiers outside of the current scope.
+
+Kyle explains using an analogy of searching for an apartment with number X in a building. If the building does not have a numbering based on the floor,
+you’ll first search on the first floor for the apartment number. If you can’t find it there, you’ll go up one floor. With this example, it
+becomes easier to understand the lexical behavior:
+
 var foo = "Hello, World";
 
 function bar() {
@@ -508,39 +440,40 @@ function bar() {
 }
 
 bar();
-```
 
-Mesma comunicação:
+Same communication:
 
-**Runtime**: "Ei, Scope Manager. Tenho foo em uma posição de Source Reference. Você tem a referência nesse escopo?"
+Runtime: “Hey, Scope Manager. I have foo in a source reference position. Do you have its reference?”
 
-**Scope Manager**:"Não".
+Scope Manager:“No”.
 
-_Sai do primeiro andar (escopo atual) e vai pro segundo andar (escopo externo). Nesse caso é o escopo global._
+Leaves the current floor (current floor) and goes up to the next floor (outer scope). In this case, it is the global scope.
 
-Se caso a referência do identificador não fosse encontrada em nenhum andar (nenhum escopo acessível), um `ReferenceError` seria retornado e
-o identificador seria criado automaticamente no escopo global. Se estiver em `strict mode`, ele não é criado.
+If the reference was not found in any floor (accessible scope), a ReferenceError will be thrown, and an identifier will be created on the
+global scope, if the "strict mode" is not enabled.
 
-Objetos como console, document são globais e também são buscados como uma referência pela comunicação do Runtime x Scope Manager, a não ser
-que você o sobrescreva. Especificamente, esses objetos fazem parte das Web APIs.
+Objects like console, document are globals, and they are also searched as a reference through the communication between the Runtime x
+Scope Manager, except if you override them. These objects enable communication with Web APIs via WebIDL.
 
-##### strict mode
+strict mode
 
-Falando sobre `'strict mode'`, ele aplica algumas regras pra evitar comportamentos inesperados no Javacript. No nosso caso o que importa é
-que provavelmente você vai querer usar `'strict mode'` pra não criar essas variáveis de escopo global automaticamente.
+Speaking of "strict mode", it enforces rules to prevent unexpected behavior in JavaScript. What matters in our case is that
+"strict mode" will prevent these auto variables from being created on the global scope, and you probably want that.
 
-## Conclusão
+Conclusion
 
-#### Sobre Closures
+About Closures
 
-Estava pensando em escrever sobre Closures nesse estudo pra fazer uma relação entre comportamento léxico e Closures. Mas Closures por si só
-e um assunto bastante extenso e vou escrever um estudo só sobre isso.
+I was thinking of writing about Closures in this study to show their relation with lexical behavior. But Closures are a huge topic that
+deserves a separate study.
 
-No geral, Javascript não é Javascript sem Closures. Qualquer funcionalidade que você usa hoje em dia que parece "Mágica", provavelmente é
-por que usa Closures. Particularmente um dos temas que mais me fascinou sobre Closures foi seu uso com Asynchronicity, tema também abordado
-no workshop de **Rethinking Asynchronous Javascript** do Kyle Simpson, então tem bastante coisa pra comentar a respeito.
+By and large, JavaScript is not JavaScript without Closures. Any functionality that you use that might seem “Magic” probably is using
+Closures under the hood. Personally, one of the topics that most caught my attention about Closures was its usage with Asynchronicity, also
+addressed on the Rethinking Asynchronous Javascript workshop from Kyle, so there’s a lot to discuss about it.
 
-#### Dynamic Scoping
+Dynamic Scoping
 
-Esse estudo já ficou enorme só explicando sobre Scopes em geral, então como mencionei no início do artigo, o próximo estudo é sobre Dynamic
-Scoping com `this` no Javascript.
+This was already a huge study, only explaining about Scopes in general, so as I mentioned in the beginning, the next study is about Dynamic
+Scoping using this.
+
+
