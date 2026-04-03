@@ -2,11 +2,11 @@
 
 Latest version of my static personal website, built with Next.js.
 
-Note: The source for this site was not created to be a template or theme, but for my own use. Feel free to take whatever inspiration from it
-that you want, but this code was not written with the intention of being cloned and deployed. As such, I do not provide support or guidance
-for doing that.
+**Quick Note**: This repository is maintained for personal use and is not intended to be a template or a public distribution. As such, I do
+not provide documentation, setup guidance, or technical support for external users.
 
 ## License
 
 - Source code in this repository is licensed under the MIT License.
+
 - Written content in `writing/` is licensed under CC BY-NC-ND 4.0.
