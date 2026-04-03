@@ -36,7 +36,7 @@ JavaScript, but I’ll structure this way since the `this` keyword introduces dy
 I’ll explain without getting into concepts like Abstract Syntax Tree and other Compiler fundamentals, which I haven’t deep-dived into. I
 prefer to avoid subjects that are not a priority in the current study. It’s like what Carl Sagan said:
 
-_"If you wish to make an apple pie from scratch, you must first invent the universe."_
+> If you wish to make an apple pie from scratch, you must first invent the universe.
 
 I had already fallen into this trap because I like to understand things in depth. The problem is that we end up falling into a rabbit hole,
 not knowing when to stop, and this is demotivating. We feel we cannot understand the whole thing. It’s basically fueling the Impostor
@@ -100,8 +100,7 @@ Each Bucket has its own color:
 ```javascript
 // Global Scope: Red Bucket 🟥
 
-// foo: Red Marble 🔴
-function foo() {
+function foo() { // foo: Red Marble 🔴
   // foo scope: Blue Bucket 🟦
 
   var bar; // bar: Blue Marble 🔵
@@ -117,20 +116,26 @@ The mapping is made by the **Scope Manager** and the **Compiler**. Kyle explains
 
 Using the example above:
 
+---
+
 **Compiler**: “Hey, Scope Manager. I have a formal declaration of `foo` on the Red Bucket. Have you heard of this before?"
 
-**Scope Manager**: “Never heard before, but here’s your marble.”
+**Scope Manager**: “Never heard of it before, but here’s your marble.”
 
-_The Red Marble foo is placed on the Red Bucket._
+The Red Marble foo is placed on the Red Bucket.
+
+---
 
 **Compiler**: “Hey, Scope Manager. `foo` is actually a function; we’ll need another bucket.”
 
-_The Blue Bucket (foo scope) is placed inside the Red Bucket (global scope)._
+The Blue Bucket (foo scope) is placed inside the Red Bucket (global scope).
+
+---
 
 You can think of it like Matryoshka dolls, the ones that fit inside one another. Or you can make a parallel with the boxing system from
-CSS/HTML. It’s not a coincidence because they’re probably using Trees as a data structure.
+CSS/HTML. 
 
-#### Duplication on different scopes
+#### Duplication on different Buckets
 
 Let’s take two identifiers with the same label, but in different scopes:
 
@@ -149,7 +154,7 @@ Even though they have the same label, we’re talking about completely different
 An identifier with the same label `foo` is placed as a Blue Marble inside the Blue Bucket. Although the `foo` from the Red Bucket cannot be
 referenced anymore on the Blue Bucket. This is known as **Shadowing**.
 
-#### Duplication on the same scope
+#### Duplication on the same Bucket
 
 In case of identifiers with the same label, on the same scope:
 
@@ -165,11 +170,15 @@ Both are read, but they won't coexist. They’ll behave differently based on the
 
 On the second declaration of `foo`:
 
+---
+
 **Compiler**: “Hey, Scope Manager. I have a formal declaration of `foo` on the Red Bucket. Have you heard of this before?”
 
 **Scope Manager**: “Yes”.
 
-_Then nothing happens._
+Nothing happens.
+
+---
 
 Function declarations, function expressions, and declarations with `let` or `const` work differently:
 
@@ -185,38 +194,37 @@ The Compiler maps function declarations and function expressions differently:
 
 function foo() {} // Red Marble
 
-var bar = function apple() {
-  // Blue Marble
+var bar = function apple() { // bar: Red Marble 
+  // apple: Blue Marble
   // Blue Bucket
 };
 
 bar();
 ```
 
-The first one is a function declaration, the standard way to write functions. The other one is a function expression. A function is only a
+The first one is a function declaration, the regular way to write functions. The other one is a function expression. A function is only a
 function expression if the keyword `function` is not the first expression in the code line. I’ll not go into depth about it because I’ll
 write a dedicated study for functions in general.
 
-What matters in our case is that any function expression has its Marble placed on its own Bucket, and can only be called in its own scope.
+What matters is that any function expression has its Marble placed on its own Bucket, and can only be called in its own scope.
 It’s also read-only.
 
 In the example above, `bar` holds a reference to `apple`. So, calling `bar` in the global scope will work.
 
+But check this:
+
 ```javascript
 // Red Bucket
-(function foo() {
-  // Blue Marble
+(function foo() { // Blue Marble
   // Blue Bucket
 });
 
 foo(); // ReferenceError
 ```
 
-But in this example, `foo` is a function expression, and it’s not accessible on the Red Bucket since its Marble belongs to its own Bucket.
-This pattern is useful to create IIFEs (Immediate Invoked Function Expression), which are present in any bundling library like Webpack or
-Vite. As mentioned earlier, I’ll discuss IIFEs in a dedicated study on functions.
-
----
+`foo` is a function expression, and it’s not accessible on the Red Bucket since its Marble belongs to its own Bucket.
+This pattern is useful to create IIFEs (Immediate Invoked Function Expression), which are present in any bundling library like *Webpack* or
+*Vite*. As mentioned earlier, I’ll discuss IIFEs in a dedicated study on functions.
 
 ### Scope Units
 
@@ -238,7 +246,7 @@ function foo() {
 foo();
 ```
 
-I have never used this syntax with brackets before, but it is still a good visual example. Any access outside `bar` scope throws a
+I've never used this syntax with brackets before, but it is still a good visual example. Any access outside `bar` scope throws a
 `ReferenceError`.
 
 Block Scoping is useful when you need temporary variables that don’t need to be accessible to the entire function scope. Some cases will be
@@ -271,7 +279,7 @@ function foo() {
   // bar();
 
   {
-    // ou bar();
+    // bar();
 
     function bar() {
       console.log("Hello, world");
@@ -316,37 +324,28 @@ foo();
 Why not simply use `var`?
 
 `var` and `let` have different usages. It is true that in some cases they work similarly. If a `let` variable is in the function scope,
-it’ll work like `var`. But why not use `var`? Using `let` indicates incorrect semantic usage of the keyword.
-
-Use `let` for block-scoping and `var` for function-scoping; one does not replace the other.
+it’ll work like `var`. But why not use `var`? Using `let` indicates incorrect semantic usage of the keyword. Use `let` for block-scoping and `var` for function-scoping; one does not replace the other.
 
 Honestly, I didn’t know about this before, and I didn’t take `var` as an option. When I learned it, I started using it more frequently in my
 projects. The problem is that most software engineers will not even try to use `var` since it’s become common practice. The same goes for
 arrow functions. Arrow functions have become the standard way to declare functions and have lost their purpose. They were implemented to
-resolve `this` lexically, not to replace any function. Even I was using it as a habit.
+resolve `this` lexically, not to replace any function. 
 
 Kyle reinforces this by saying that software engineers should know their tools better. I am not saying to adopt `var`, but that we should at
 least understand before discarding it, and I agree with this. What I do not agree with is spreading misinformation as an absolute truth. I
-doubt that, if questioned, developers who abominate its usage could explain the real reason why they do not use it.
-
-I agree that JavaScript has many problems, like any other popular programming language, but cases like this sound more like ignorance to me.
+doubt that, if questioned, developers who abominate its usage could explain the real reason why they do not use it. I agree that JavaScript has many problems, like any other popular programming language, but cases like this sound more like ignorance to me.
 
 There are indeed several arguments against using `var`, for example, unexpected behavior. `var` allows you to redeclare variables. If
 someone uses the same label to assign another value, the variable will be overwritten. On the other hand, `let` and `const` won’t even
-compile if you try to redeclare the variable. Maybe redeclaring a variable might be useful in your case.
+compile if you try to redeclare the variable. But maybe redeclaring a variable might be useful in your case.
 
 If you try to access a `var` variable before its declaration, it will return `undefined` (this is **Hoisting**, which I’ll cover in the next
 topic). `let` and `const` will throw a **Temporal Dead Zone** Error (also covered in the next topic).
 
-Besides that, tools like TypeScript and ESLint will warn about these errors in IDEs like VS Code or Neovim, making it easier to prevent them
+Also, tools like *TypeScript* and *ESLint* will warn about these errors in IDEs like *VS Code* or *Neovim*, making it easier to prevent them
 situations.
 
-I still have my caveats with `var` because popular frameworks like React impose their own standards, and using `var` may confuse other
-developers even more.
-
-Anyway, this section has already gotten huge, but I thought it would be worth discussing further.
-
----
+All things considered, I still have my caveats with `var` because popular frameworks like React impose their own standards, and using `var` may confuse other developers even more.
 
 ### Hoisting
 
@@ -396,24 +395,23 @@ apply the same rule to `let`.
 
 ## Execution Phase (Runtime)
 
-Finally, after the Compile Pass, the Runtime takes over. JavaScript is Single-Threaded, so the code will be executed line by line, one after
-the other.
+Finally, after the Compile Pass, the Runtime takes over. JavaScript is Single-Threaded, so the code will be executed line by line.
 
 The same communication with the Scope Manager made on the Compile Pass will be made on Runtime. The communication is based on the identifier
 reference:
 
 #### Target Reference (Left-hand side)
 
-Basically, it’s a Target Reference when the identifier receives a value:
+Basically, it’s a target reference when the identifier receives a value:
 
 ```javascript
 function bar() {
   foo = "bar"; // left-hand side
 
-  console.log(foo); // right-hand side
+  console.log(foo); 
 }
 
-bar(); // right-hand side
+bar(); 
 ```
 
 #### Source Reference (Right-hand side)
@@ -422,7 +420,7 @@ Any read operation of the identifier:
 
 ```javascript
 function bar() {
-  foo = "bar"; // left-hand side
+  foo = "bar"; 
 
   console.log(foo); // right-hand side
 }
@@ -432,19 +430,21 @@ bar(); // right-hand side
 
 Example using the metaphor:
 
-**Runtime**: “Hey, Scope Manager. I have `foo` in a target reference position. Do you have its reference?”
+---
+
+**Runtime**: “Hey, Scope Manager. I have `foo` in a target reference position. Have you heard of this before?”
 
 **Scope Manager**: “Yes, here’s your Marble”.
 
-_The string `bar` is assigned to `foo`._
+The string `bar` is assigned to `foo`.
 
 ---
 
-**Runtime**: “Hey, Scope Manager. I have `foo` in a source reference position. Do you have its reference?”
+**Runtime**: “Hey, Scope Manager. I have `foo` in a source reference position. Have you heard of this before?”
 
 **Scope Manager**: “Yes, here’s your Marble”.
 
-_`console.log` is called with the argument `foo`._
+`console.log` is called with the argument `foo`.
 
 ---
 
@@ -452,7 +452,9 @@ _`console.log` is called with the argument `foo`._
 
 **Scope Manager**: “Yes, here’s your Marble”.
 
-_The function `bar` is called._
+The function `bar` is called.
+
+---
 
 ### Lexical Behavior
 
@@ -474,35 +476,32 @@ bar();
 
 Same communication:
 
-**Runtime**: “Hey, Scope Manager. I have `foo` in a source reference position. Do you have its reference?”
+---
 
-**Scope Manager**:“No”.
+**Runtime**: “Hey, Scope Manager. I have `foo` in a source reference position. Do you have its reference?”.
 
-_Leaves the current floor (current floor) and goes up to the next floor (outer scope). In this case, it is the global scope._
+**Scope Manager**: “No”.
 
-If the reference was not found in any floor (accessible scope), a `ReferenceError` will be thrown, and an identifier will be created on the
-global scope, if the "strict mode" is not enabled.
+Leaves the current floor (current scope) and goes up to the next floor (outer scope). In this case, it is the global scope. 
+
+---
+
+If the reference cannot be found in any available floor (accessible scope), a `ReferenceError` is thrown, and an identifier will be created on the global scope, if the `"strict mode"` is not enabled.
 
 Objects like `console`, `document` are globals, and they are also searched as a reference through the communication between the Runtime x
-Scope Manager, except if you override them. These objects enable communication with Web APIs via WebIDL.
+Scope Manager, except if you override them. These objects enable communication with *Web APIs* via *WebIDL*.
 
-##### strict mode
+#### strict mode
 
-Speaking of `"strict mode"`, it enforces rules to prevent unexpected behavior in JavaScript. What matters in our case is that
-`"strict mode"` will prevent these auto variables from being created on the global scope, and you probably want that.
+Speaking of `"strict mode"`, it enforces rules to prevent unexpected behaviors in JavaScript. The `"strict mode"` will also prevent these auto variables from being created on the global scope, and you probably want that.
 
 ## Conclusion
 
 #### About Closures
 
-I was thinking of writing about Closures in this study to show their relation with lexical behavior. But Closures are a huge topic that
-deserves a separate study.
+I was thinking of writing about Closures in this study to show their relation with lexical behavior. But Closures are a huge topic, and deserves a separate study.
 
 By and large, JavaScript is not JavaScript without Closures. Any functionality that you use that might seem “Magic” probably is using
 Closures under the hood. Personally, one of the topics that most caught my attention about Closures was its usage with Asynchronicity, also
 addressed on the Rethinking Asynchronous Javascript workshop from Kyle, so there’s a lot to discuss about it.
 
-#### Dynamic Scoping
-
-This was already a huge study, only explaining about Scopes in general, so as I mentioned in the beginning, the next study is about Dynamic
-Scoping using `this`.
