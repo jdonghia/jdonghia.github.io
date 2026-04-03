@@ -1,3 +1,4 @@
+import { Comments } from "@/components/Comments";
 import MdxContent from "@/components/MdxContent";
 import { components } from "@/components/Typography";
 import { getWriting, getWritings } from "@/lib/writings";
@@ -39,25 +40,42 @@ export default async function Page({ params }: { params: Promise<ParamsProps> })
   });
 
   return (
-    <article>
-      <div className="mb-16">
-        <p className="text-sm mb-5">{date}</p>
-        <H1 className="my-0">{title}</H1>
-        <H3 className="mt-2 text-2xl pb-3 border-b">{subtitle}</H3>
-        {tags && (
-          <ul className="mt-4 flex mb-10 flex-wrap gap-2">
-            {tags?.map((tag: string) => (
-              <li
-                key={tag}
-                className="dark:text-light-sea-green dark:bg-jet bg-light-sea-green text-seasalt block rounded-full px-3 py-2 text-xs"
-              >
-                {tag}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-      <MdxContent source={mdxSource} />
-    </article>
+    <>
+      <article>
+        <div className="mb-16">
+          <p className="text-sm mb-5">{date}</p>
+          <H1 className="my-0">{title}</H1>
+          <H3 className="mt-2 text-2xl pb-3 border-b">{subtitle}</H3>
+          {tags && (
+            <ul className="mt-4 flex mb-10 flex-wrap gap-2">
+              {tags?.map((tag: string) => (
+                <li
+                  key={tag}
+                  className="dark:text-light-sea-green dark:bg-jet bg-light-sea-green text-seasalt block rounded-full px-3 py-2 text-xs"
+                >
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        <MdxContent source={mdxSource} />
+      </article>
+      {/* <Comments */}
+      {/*   id="comments" */}
+      {/*   repo="giscus/giscus-component" */}
+      {/*   repoId="MDEwOlJlcG9zaXRvcnkzOTEzMTMwMjA=" */}
+      {/*   category="Announcements" */}
+      {/*   categoryId="DIC_kwDOF1L2fM4B-hVS" */}
+      {/*   mapping="specific" */}
+      {/*   term="Welcome to @giscus/react component!" */}
+      {/*   reactionsEnabled="1" */}
+      {/*   emitMetadata="0" */}
+      {/*   inputPosition="top" */}
+      {/*   theme="light" */}
+      {/*   lang="en" */}
+      {/*   loading="lazy" */}
+      {/* /> */}
+    </>
   );
 }
