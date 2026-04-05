@@ -5,14 +5,11 @@ role: "Frontend Engineer"
 company: "JiveMaua"
 url: "https://jivemaua.com.br/"
 subtitle: "Junior Frontend Engineer"
-description:
-  "Worked on strategic projects as the Frontend Lead, aiming to completely
-  eliminate the company's multimillion-dollar expenses with ServiceNow licenses.
-  I also initiated the frontend development workflow by integrating our
-  ServiceNow instance with React boilerplates."
+description: "Worked on strategic projects as the Frontend Lead, aiming to completely eliminate the company's multimillion-dollar expenses
+  with ServiceNow licenses.
+  "
 stack:
   - "React.js"
-  - "Typescript"
-  - "ANT Design"
-  - "Amazon Web Services"
+  - "TypeScript"
+  - "AWS (Amazon Web Services)"
 ---

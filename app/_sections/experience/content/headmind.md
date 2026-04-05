@@ -6,9 +6,9 @@ company: "HeadMind Partners"
 url: "https://www.headmind.com/"
 description:
   "Migrated a monolithic Ruby application by implementing a modern architecture
-  with Vue.js and Java with Spring Boot"
+  with Vue.js and Java with Spring Boot."
 stack:
   - "Vue.js"
-  - "Typescript"
+  - "TypeScript"
   - "Bootstrap"
 ---
