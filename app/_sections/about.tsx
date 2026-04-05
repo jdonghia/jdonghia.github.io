@@ -7,21 +7,21 @@ export function About() {
       <SectionLabel>About me</SectionLabel>
       <article className="space-y-6">
         <p className="leading-7">
-          I&apos;m a Software Engineer with 4+ years of professional experience. I build clean, functional, and efficient interfaces, always
-          focusing on clarity, consistency, and performance.
+          I&apos;m a Software Engineer with over 5 years of experience. I build clean, functional, and efficient interfaces,
+          always focusing on clarity, consistency, and performance.
         </p>
         <p className="leading-7">
-          I currently work at Claro S.A, where I lead the development of Claro Música TV. My work is focused on keeping it stable, scalable,
-          and easy to maintain.
+          I currently work at Claro S.A., building and maintaining the Claro Música TV app. My work is focused on keeping the application
+          stable, scalable, and easy to maintain.
         </p>
         <p className="leading-7">
-          In the past, I’ve worked in consulting firms and finance companies adapt tech to different business needs.
+          In the past, I’ve worked with consulting firms and finance companies, adapting technology to solve diverse business needs.
         </p>
         <p className="leading-7">
           Structure, minimalism, and well-defined systems are central to how I think and work. On the side, I build side projects to
-          experiment and keep learning.
+          experiment with new ideas and write articles to share my learnings.
         </p>
-        <p className="leading-7">I also play piano, it helps me slow down and stay focused.</p>
+        <p className="leading-7">I also play the piano, it helps me slow down and stay focused.</p>
         <ArrowLink target="_blank" href="resume.pdf">
           Check out my full resume
         </ArrowLink>

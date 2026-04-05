@@ -8,9 +8,9 @@ export function Intro() {
       <h2 className="font-inter-tight text-eerie-black dark:text-seasalt mt-2 text-xl">Software Engineer</h2>
 
       <h3 className="my-5">
-        Crafting exclusive digital experiences through
+        Writing about development and 
         <br />
-        minimalist design and cutting-edge technology.
+        sharing thoughts on software, tools, and learning.
       </h3>
 
       <Footer className="items-start py-3" />
